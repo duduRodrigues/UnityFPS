@@ -9,7 +9,7 @@ public class Destructible : MonoBehaviour {
 	public void Destroy()
     {
         // Spawn a shattered object
-        Instantiate(destroyedVersion, transform.position, transform.rotation);
+        GameObject go = Instantiate(destroyedVersion, transform.position, transform.rotation);
         // Remove the current object
         Destroy(gameObject);
     }

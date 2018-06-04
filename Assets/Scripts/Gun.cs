@@ -22,9 +22,15 @@ public class Gun : MonoBehaviour {
 
     public Animator animator;
 
+    public AudioSource shootAudio;
+    public AudioSource reloadingAudio;
+
+    Scope scope;
+
     void Start()
     {
-        currentAmmo = maxAmmo;    
+        currentAmmo = maxAmmo;
+        scope = GetComponent<Scope>();
     }
 
     void OnEnable()
@@ -53,6 +59,8 @@ public class Gun : MonoBehaviour {
 
     void Shoot()
     {
+        shootAudio.Play();
+
         currentAmmo--;
 
         gunFlash.Play();
@@ -73,6 +81,12 @@ public class Gun : MonoBehaviour {
                 _hit.rigidbody.AddForce(-_hit.normal * damage * impactForceConstant);
             }
 
+            Destructible _destructibleObject = _hit.transform.GetComponent<Destructible>();
+            if (_destructibleObject != null)
+            {
+                _destructibleObject.Destroy();
+            }
+
             GameObject effect = Instantiate(impactEffect, _hit.point, Quaternion.LookRotation(_hit.normal));
             Destroy(effect, 1f);
         }
@@ -80,6 +94,8 @@ public class Gun : MonoBehaviour {
 
     IEnumerator Reload()
     {
+        reloadingAudio.Play();
+
         isReloading = true;
         Debug.Log("Reloading...");
 
