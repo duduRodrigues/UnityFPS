@@ -59,4 +59,11 @@ public class Scope : MonoBehaviour {
         else
             mainCamera.fieldOfView = defaultFOV;
     }
+
+    public void Deactivate()
+    {
+        isScoped = false;
+        animator.SetBool("Scoping", false);
+        UpdateScopeUI();
+    }
 }

@@ -20,14 +20,18 @@ public class WeaponSwitcher : MonoBehaviour {
         // scroll up
         if (d > 0f)
         {
-            this.transform.GetChild(selectedWeapon).gameObject.SetActive(false);
+            Transform child = this.transform.GetChild(selectedWeapon);
+            child.GetComponent<Gun>().Deactivate();
+            child.gameObject.SetActive(false);
             selectedWeapon = selectedWeapon == 0 ? transform.childCount - 1 : selectedWeapon - 1;
             this.transform.GetChild(selectedWeapon).gameObject.SetActive(true);
         }
         // scroll down
         else if (d < 0f)
         {
-            this.transform.GetChild(selectedWeapon).gameObject.SetActive(false);
+            Transform child = this.transform.GetChild(selectedWeapon);
+            child.GetComponent<Gun>().Deactivate();
+            child.gameObject.SetActive(false);
             selectedWeapon = selectedWeapon == (transform.childCount - 1) ? 0 : selectedWeapon + 1;
             this.transform.GetChild(selectedWeapon).gameObject.SetActive(true);
         }
@@ -36,7 +40,9 @@ public class WeaponSwitcher : MonoBehaviour {
         {
             if (Input.GetKey((KeyCode)i))
             {
-                this.transform.GetChild(selectedWeapon).gameObject.SetActive(false);
+                Transform child = this.transform.GetChild(selectedWeapon);
+                child.GetComponent<Gun>().Deactivate();
+                child.gameObject.SetActive(false);
                 selectedWeapon = i-49;
                 this.transform.GetChild(selectedWeapon).gameObject.SetActive(true);
             }

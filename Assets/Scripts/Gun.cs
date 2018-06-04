@@ -68,7 +68,7 @@ public class Gun : MonoBehaviour {
 
         if(Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out _hit, range))
         {
-            Debug.Log(_hit.transform.name);
+            //Debug.Log(_hit.transform.name);
 
             Target _target = _hit.transform.GetComponent<Target>();
             if(_target != null)
@@ -84,11 +84,18 @@ public class Gun : MonoBehaviour {
             Destructible _destructibleObject = _hit.transform.GetComponent<Destructible>();
             if (_destructibleObject != null)
             {
-                _destructibleObject.Destroy();
+                GameObject _go = _destructibleObject.Destroy();
+                Destroy(_go, 15f);
+                Rigidbody _rb = _go.GetComponent<Rigidbody>();
+                if (_rb != null)
+                {
+                    _rb.AddExplosionForce(1f, transform.position, 5f);
+                }
             }
 
             GameObject effect = Instantiate(impactEffect, _hit.point, Quaternion.LookRotation(_hit.normal));
             Destroy(effect, 1f);
+            
         }
     }
 
@@ -97,7 +104,7 @@ public class Gun : MonoBehaviour {
         reloadingAudio.Play();
 
         isReloading = true;
-        Debug.Log("Reloading...");
+        //Debug.Log("Reloading...");
 
         animator.SetBool("Reloading", true);
 
@@ -109,5 +116,13 @@ public class Gun : MonoBehaviour {
 
         currentAmmo = maxAmmo;
         isReloading = false;
+    }
+
+    public void Deactivate()
+    {
+        if (scope)
+        {
+            scope.Deactivate();
+        }
     }
 }
