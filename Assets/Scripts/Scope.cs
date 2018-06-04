@@ -34,8 +34,6 @@ public class Scope : MonoBehaviour {
             animator.SetBool("Scoping", false);
             OnUnscoped();
         }
-        
-
     }
 
     IEnumerator OnScoped()
