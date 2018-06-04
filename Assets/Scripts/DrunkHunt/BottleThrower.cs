@@ -10,7 +10,8 @@ public class BottleThrower : MonoBehaviour {
 
     void Start()
     {
-        GameObject go = Instantiate(bottle, transform.position, transform.rotation);
+        float randRot = Random.Range(0, 30);
+        GameObject go = Instantiate(bottle, transform.position, Quaternion.Euler(randRot, randRot%12, (randRot*12)%30));
      
         Destroy(go, 10);
     }
@@ -20,7 +21,8 @@ public class BottleThrower : MonoBehaviour {
 		if(Time.time - delayToThrow > counter)
         {
             counter = Time.time;
-            GameObject go = Instantiate(bottle, transform.position, transform.rotation);
+            float randRot = Random.Range(0, 30);
+            GameObject go = Instantiate(bottle, transform.position, Quaternion.Euler(randRot, randRot % 12, (randRot * 12) % 30));
 
         }
 	}
